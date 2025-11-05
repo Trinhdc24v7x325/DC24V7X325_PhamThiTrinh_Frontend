@@ -34,16 +34,16 @@
           <i class="fas fa-address-card"></i>
         </h4>
         <ContactCard :contact="activeContact" />
+
         <router-link
-          :to="{
-            name: 'contact.edit',
-            params: { id: activeContact._id },
-          }"
+          :to="{ name: 'contact.edit', params: { id: activeContact._id } }"
+          class="d-inline-block"
         >
           <span class="mt-2 badge badge-warning">
-            <i class="fas fa-edit"></i> Hiệu chỉnh</span
-          >
+            <i class="fas fa-edit"></i> Hiệu chỉnh
+          </span>
         </router-link>
+        <ContactExtraCard class="mt-2" :contact="activeContact" />
       </div>
     </div>
   </div>
@@ -53,11 +53,13 @@ import ContactCard from "@/components/ContactCard.vue";
 import InputSearch from "@/components/InputSearch.vue";
 import ContactList from "@/components/ContactList.vue";
 import ContactService from "@/services/contact.service";
+import ContactExtraCard from "@/components/ContactExtraCard.vue";
 export default {
   components: {
     ContactCard,
     InputSearch,
     ContactList,
+    ContactExtraCard,
   },
   data() {
     return {
@@ -121,6 +123,21 @@ export default {
   },
   mounted() {
     this.refreshList();
+  },
+  tinhTrangLabel(code) {
+    const map = {
+      doc_than: "Độc thân",
+      gia_dinh: "Có Gia đình",
+    };
+    return map[code] || "Không rõ";
+  },
+  soThichLabel(code) {
+    const map = {
+      doc_sach: "Đi cà phê",
+      xem_phim: "Xem phim",
+      choi_dan: "Chơi đàn",
+    };
+    return map[code] || code;
   },
 };
 </script>
